@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>List Files</title>
+</head>
+<body>
+  <ul id="fileList"></ul>
+
+  <script>
+    fetch('.').then(function(response) {
+      return response.text();
+    }).then(function(body) {
+      var parser = new DOMParser();
+      var htmlDoc = parser.parseFromString(body, 'text/html');
+      var fileListElement = document.getElementById('fileList');
+
+      var files = htmlDoc.querySelectorAll('a');
+
+      files.forEach(function(file) {
+        var listItem = document.createElement('li');
+        var link = document.createElement('a');
+        link.href = file.href;
+        link.textContent = file.textContent;
+        listItem.appendChild(link);
+        fileListElement.appendChild(listItem);
+      });
+    });
+  </script>
+</body>
+</html>
